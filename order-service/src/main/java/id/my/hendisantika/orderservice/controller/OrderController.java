@@ -4,6 +4,8 @@ import id.my.hendisantika.orderservice.entity.Order;
 import id.my.hendisantika.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,5 +31,10 @@ public class OrderController {
     @GetMapping
     public List<Order> getAllOrders() {
         return orderService.getAllOrders();
+    }
+
+    @PostMapping
+    public Order saveOrder(@RequestBody Order order) {
+        return orderService.saveOrder(order);
     }
 }
