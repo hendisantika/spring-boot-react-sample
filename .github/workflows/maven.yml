@@ -11,8 +11,20 @@ name: Java CI with Maven
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - "api-gateway/**"
+      - "eureka-server/**"
+      - "order-service/**"
+      - "product-service/**"
+      - ".github/workflows/maven.yml"
   pull_request:
     branches: [ "main" ]
+    paths:
+      - "api-gateway/**"
+      - "eureka-server/**"
+      - "order-service/**"
+      - "product-service/**"
+      - ".github/workflows/maven.yml"
   workflow_dispatch:
 
 permissions:

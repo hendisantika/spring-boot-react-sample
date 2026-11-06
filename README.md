@@ -172,7 +172,7 @@ Since JDK 23, `javac` no longer runs annotation processors found on the classpat
 
 | Workflow | File | What it does |
 |----------|------|--------------|
-| Java CI with Maven | [`.github/workflows/maven.yml`](.github/workflows/maven.yml) | Builds & tests every service in a parallel matrix with Temurin JDK 25, then submits the Maven dependency graph for Dependabot alerts |
+| Java CI with Maven | [`.github/workflows/maven.yml`](.github/workflows/maven.yml) | Builds & tests every service in a parallel matrix with Temurin JDK 25 (only when a service folder changes), then submits the Maven dependency graph for Dependabot alerts |
 | Frontend CI | [`.github/workflows/frontend.yml`](.github/workflows/frontend.yml) | Runs `npm ci`, the Jest tests and a production build of `react-frontend` on Node.js 22 (only when `react-frontend/**` changes) and uploads the build as an artifact |
 
 Both run on pushes / pull requests to `main` and can also be triggered manually (`workflow_dispatch`).
