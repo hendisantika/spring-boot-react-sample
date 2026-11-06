@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.1.1</version>
+        <version>4.1.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>id.my.hendisantika</groupId>
@@ -15,7 +15,7 @@
     <description>api-gateway</description>
     <properties>
         <java.version>21</java.version>
-        <spring-cloud.version>2025.1.3</spring-cloud.version>
+        <spring-cloud.version>2025.1.4</spring-cloud.version>
     </properties>
     <dependencies>
         <dependency>
@@ -24,7 +24,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
+            <artifactId>spring-cloud-starter-gateway-server-webflux</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
