@@ -21,12 +21,20 @@ import org.springframework.web.cors.reactive.CorsWebFilter;
 @Configuration
 public class ApiGatewayConfiguration {
 
+    /**
+     * Downstream services also send CORS headers (@CrossOrigin), so keep only one copy.
+     */
+    private static final String DEDUPE_CORS_HEADERS =
+            "Access-Control-Allow-Origin Access-Control-Allow-Credentials";
+
     @Bean
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route("product_service", r -> r.path("/products/**")
+                        .filters(f -> f.dedupeResponseHeader(DEDUPE_CORS_HEADERS, "RETAIN_FIRST"))
                         .uri("lb://product-service"))
                 .route("order_service", r -> r.path("/orders/**")
+                        .filters(f -> f.dedupeResponseHeader(DEDUPE_CORS_HEADERS, "RETAIN_FIRST"))
                         .uri("lb://order-service"))
                 .build();
     }
