@@ -1,6 +1,7 @@
 # spring-boot-react-sample
 
 [![Java CI with Maven](https://github.com/hendisantika/spring-boot-react-sample/actions/workflows/maven.yml/badge.svg)](https://github.com/hendisantika/spring-boot-react-sample/actions/workflows/maven.yml)
+[![Frontend CI](https://github.com/hendisantika/spring-boot-react-sample/actions/workflows/frontend.yml/badge.svg)](https://github.com/hendisantika/spring-boot-react-sample/actions/workflows/frontend.yml)
 ![Java](https://img.shields.io/badge/Java-25-orange?logo=openjdk)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.2-6DB33F?logo=springboot)
 ![Spring Cloud](https://img.shields.io/badge/Spring%20Cloud-2025.1.4-6DB33F?logo=spring)
@@ -169,8 +170,12 @@ Since JDK 23, `javac` no longer runs annotation processors found on the classpat
 
 ## CI
 
-[`.github/workflows/maven.yml`](.github/workflows/maven.yml) builds and tests every service with Temurin JDK 25 on
-each push / pull request to `main`, then submits the Maven dependency graph for Dependabot alerts.
+| Workflow | File | What it does |
+|----------|------|--------------|
+| Java CI with Maven | [`.github/workflows/maven.yml`](.github/workflows/maven.yml) | Builds & tests every service in a parallel matrix with Temurin JDK 25, then submits the Maven dependency graph for Dependabot alerts |
+| Frontend CI | [`.github/workflows/frontend.yml`](.github/workflows/frontend.yml) | Runs `npm ci`, the Jest tests and a production build of `react-frontend` on Node.js 22 (only when `react-frontend/**` changes) and uploads the build as an artifact |
+
+Both run on pushes / pull requests to `main` and can also be triggered manually (`workflow_dispatch`).
 
 ## Dependabot
 

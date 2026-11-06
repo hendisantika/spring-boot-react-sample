@@ -1,0 +1,59 @@
+name: Frontend CI
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "react-frontend/**"
+      - ".github/workflows/frontend.yml"
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - "react-frontend/**"
+      - ".github/workflows/frontend.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Test & build react-frontend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: react-frontend
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: react-frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Run tests
+        run: npm test -- --watchAll=false
+        env:
+          CI: true
+
+      - name: Build
+        run: npm run build
+        env:
+          CI: true
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: react-frontend-build
+          path: react-frontend/build
+          retention-days: 7
