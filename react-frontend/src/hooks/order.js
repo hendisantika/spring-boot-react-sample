@@ -1,24 +1,7 @@
-import { useEffect, useState } from 'react';
-import OrderService from "../api/OrderService";
+import OrderService from '../api/OrderService';
+import {useResource} from './useResource';
 
-export const useOrderList = () => {
-  const [data, setData] =  useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [err, setErr] = useState("")
+const fetchAll = () => OrderService.getAllOrders();
+const createOne = (order) => OrderService.createOrder(order);
 
-  useEffect(() => {
-    OrderService.getAllOrders().then((response) => {
-      setData(response.data);
-      setIsLoading(false)
-    }).catch(() => {
-      setIsLoading(false)
-      setErr("There is error")
-    });
-  }, [])
-
-  return {
-    data,
-    isLoading,
-    err,
-  }
-}
+export const useOrderList = () => useResource(fetchAll, createOne, 'orders');

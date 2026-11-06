@@ -1,21 +1,19 @@
-import axios from 'axios';
-
-const API_BASE_URL = "http://localhost:8080/orders";
+import client from './client';
 
 class OrderService {
     async getAllOrders() {
-        return axios.get(API_BASE_URL);
+        return client.get('/orders');
     }
 
     async getOrderById(orderId) {
-        return axios.get(`${API_BASE_URL}/${orderId}`);
+        return client.get(`/orders/${orderId}`);
     }
 
     async createOrder(order) {
-        return axios.post(API_BASE_URL, order);
+        return client.post('/orders', order);
     }
 }
 
-const orderService = new OrderService()
+const orderService = new OrderService();
 
 export default orderService;

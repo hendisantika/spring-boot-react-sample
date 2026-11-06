@@ -1,21 +1,19 @@
-import axios from 'axios';
-
-const API_BASE_URL = "http://localhost:8081/products";
+import client from './client';
 
 class ProductService {
     async getAllProducts() {
-        return axios.get(API_BASE_URL);
+        return client.get('/products');
     }
 
     async getProductById(productId) {
-        return axios.get(`${API_BASE_URL}/${productId}`);
+        return client.get(`/products/${productId}`);
     }
 
     async createProduct(product) {
-        return axios.post(API_BASE_URL, product);
+        return client.post('/products', product);
     }
 }
 
-const productService = new ProductService()
+const productService = new ProductService();
 
 export default productService;

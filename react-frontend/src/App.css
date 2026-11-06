@@ -1,38 +1,242 @@
-.App {
-    text-align: center;
+/* ---------- Bootstrap overrides ---------- */
+.btn-primary {
+    --bs-btn-bg: var(--app-btn-bg);
+    --bs-btn-border-color: var(--app-btn-bg);
+    --bs-btn-hover-bg: var(--app-btn-hover-bg);
+    --bs-btn-hover-border-color: var(--app-btn-hover-bg);
+    --bs-btn-active-bg: var(--app-btn-hover-bg);
+    --bs-btn-active-border-color: var(--app-btn-hover-bg);
+    --bs-btn-disabled-bg: var(--app-btn-bg);
+    --bs-btn-disabled-border-color: var(--app-btn-bg);
+    --bs-btn-color: #fff;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-color: #fff;
+    --bs-btn-disabled-color: #fff;
 }
 
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+.btn-outline-primary {
+    --bs-btn-color: var(--app-accent);
+    --bs-btn-border-color: var(--app-accent);
+    --bs-btn-hover-bg: var(--app-accent);
+    --bs-btn-hover-border-color: var(--app-accent);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-active-bg: var(--app-accent-hover);
+    --bs-btn-active-border-color: var(--app-accent-hover);
+    --bs-btn-active-color: #fff;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
+.btn {
+    border-radius: 0.65rem;
+    font-weight: 500;
+}
+
+.form-control,
+.form-select,
+.input-group-text {
+    border-radius: 0.65rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--app-accent);
+    box-shadow: 0 0 0 0.2rem var(--app-accent-soft);
+}
+
+.card {
+    background-color: var(--app-surface);
+    border: 1px solid var(--app-border);
+    border-radius: 1rem;
+    box-shadow: var(--app-shadow);
+}
+
+.min-w-0 {
+    min-width: 0;
+}
+
+/* ---------- Navbar ---------- */
+.app-navbar {
+    background-color: color-mix(in srgb, var(--app-surface) 85%, transparent);
+    backdrop-filter: saturate(180%) blur(12px);
+    border-color: var(--app-border) !important;
+}
+
+.brand-logo {
+    display: inline-grid;
+    place-items: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 0.65rem;
+    color: #fff;
+    background: linear-gradient(135deg, #6d6df0, #a855f7);
+    box-shadow: 0 4px 12px rgba(109, 109, 240, 0.35);
+}
+
+.app-navbar .nav-pills .nav-link {
+    color: var(--bs-secondary-color);
+    border-radius: 0.65rem;
+    font-weight: 500;
+}
+
+.app-navbar .nav-pills .nav-link:hover {
+    color: var(--bs-body-color);
+    background-color: var(--app-accent-soft);
+}
+
+.app-navbar .nav-pills .nav-link.active {
+    color: var(--app-accent);
+    background-color: var(--app-accent-soft);
+}
+
+.btn-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+    padding: 0;
+    border-radius: 0.65rem;
+    color: var(--bs-secondary-color);
+    border: 1px solid var(--app-border);
+}
+
+.btn-icon:hover {
+    color: var(--app-accent);
+    background-color: var(--app-accent-soft);
+}
+
+/* ---------- Page header & stats ---------- */
+.page-icon,
+.stat-icon,
+.state-icon {
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+}
+
+.page-icon {
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 1rem;
+    font-size: 1.5rem;
+    color: var(--app-accent);
+    background-color: var(--app-accent-soft);
+}
+
+.stat-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.8rem;
+    font-size: 1.25rem;
+}
+
+.state-icon {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    font-size: 1.75rem;
+}
+
+/* ---------- Products ---------- */
+.avatar {
+    --hue: 250;
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: hsl(var(--hue) 70% 40%);
+    background-color: hsl(var(--hue) 85% 94%);
+}
+
+[data-bs-theme="dark"] .avatar {
+    color: hsl(var(--hue) 85% 78%);
+    background-color: hsl(var(--hue) 40% 22%);
+}
+
+.avatar-sm {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.65rem;
+    font-size: 0.8rem;
+}
+
+.product-card {
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--app-accent-soft);
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
+}
+
+.product-card .price {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--app-accent);
+}
+
+.search-box .input-group-text {
+    background-color: var(--app-surface);
+    color: var(--bs-secondary-color);
+}
+
+.search-box .form-control {
+    background-color: var(--app-surface);
+    border-left: 0;
+}
+
+/* ---------- Orders ---------- */
+.table-card {
+    overflow: hidden;
+}
+
+.table-card .table {
+    --bs-table-bg: transparent;
+}
+
+.table-card thead th {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--bs-secondary-color);
+    background-color: var(--bs-tertiary-bg);
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+}
+
+.table-card tbody td {
+    padding-top: 0.9rem;
+    padding-bottom: 0.9rem;
+    border-color: var(--app-border);
+}
+
+.table-card tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.summary {
+    padding: 0.85rem 1rem;
+    border-radius: 0.75rem;
+    background-color: var(--app-accent-soft);
+}
+
+/* ---------- Forms ---------- */
+@media (min-width: 992px) {
+    .form-card.sticky-lg-top {
+        top: 5.5rem;
+        z-index: 1;
     }
 }
 
-.App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-}
-
-.App-link {
-    color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
+/* ---------- Motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+    .product-card {
+        transition: none;
     }
-    to {
-        transform: rotate(360deg);
+
+    .product-card:hover {
+        transform: none;
     }
 }

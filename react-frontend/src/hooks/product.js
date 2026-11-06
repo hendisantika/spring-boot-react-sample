@@ -1,24 +1,7 @@
-import { useEffect, useState } from 'react';
-import ProductService from "../api/ProductService";
+import ProductService from '../api/ProductService';
+import {useResource} from './useResource';
 
-export const useProductList = () => {
-  const [data, setData] =  useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [err, setErr] = useState("")
+const fetchAll = () => ProductService.getAllProducts();
+const createOne = (product) => ProductService.createProduct(product);
 
-  useEffect(() => {
-    ProductService.getAllProducts().then((response) => {
-      setData(response.data);
-      setIsLoading(false)
-    }).catch(() => {
-      setIsLoading(false)
-      setErr("There is error")
-    });
-  }, [])
-
-  return {
-    data,
-    isLoading,
-    err,
-  }
-} 
+export const useProductList = () => useResource(fetchAll, createOne, 'products');

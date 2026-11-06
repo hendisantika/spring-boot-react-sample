@@ -4,7 +4,8 @@
 ![Java](https://img.shields.io/badge/Java-25-orange?logo=openjdk)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.2-6DB33F?logo=springboot)
 ![Spring Cloud](https://img.shields.io/badge/Spring%20Cloud-2025.1.4-6DB33F?logo=spring)
-![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3?logo=bootstrap)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Spring Boot + React sample with a microservice architecture: service discovery (Eureka), an API gateway
@@ -12,13 +13,21 @@ Spring Boot + React sample with a microservice architecture: service discovery (
 
 ## Screenshots
 
-### React frontend — Products
+### Products — catalog, stats, search & add product form
 
 ![Products page](img/products.png)
 
-### React frontend — Orders
+### Orders — order table, live total & new order form
 
 ![Orders page](img/orders.png)
+
+### Dark mode
+
+![Products page in dark mode](img/products-dark.png)
+
+### Mobile
+
+<img src="img/mobile.png" alt="Products page on mobile" width="320"/>
 
 ### Eureka dashboard
 
@@ -36,7 +45,7 @@ All services registered with the service registry (`order-service` running on po
 | API gateway        | Spring Cloud Gateway (`spring-cloud-starter-gateway-server-webflux`) |
 | Persistence        | Spring Data JPA + H2 (in-memory)                                 |
 | Boilerplate        | Lombok                                                           |
-| Frontend           | React 18, React Router, Axios, Bootstrap 5                       |
+| Frontend           | React 19, React Router 7, Axios, Bootstrap 5.3, Bootstrap Icons  |
 | Build              | Maven (one `pom.xml` per service)                                |
 | CI / Dependencies  | GitHub Actions, Dependabot                                       |
 
@@ -71,7 +80,7 @@ All services registered with the service registry (`order-service` running on po
 | `api-gateway`     | `8080`  | Routes `/products/**` & `/orders/**` via Eureka, CORS enabled |
 | `product-service` | `8081`  | Product CRUD (`id`, `name`, `price`)           |
 | `order-service`   | `8080`* | Order CRUD (`id`, `product`, `quantity`)       |
-| `react-frontend`  | `3000`  | React UI for products and orders               |
+| `react-frontend`  | `3000`  | MicroShop UI: products & orders, light/dark mode |
 
 > \* `order-service` and `api-gateway` both default to port `8080`. To run them together, override one of them,
 > e.g. `mvn spring-boot:run -Dspring-boot.run.arguments=--server.port=8082` in `order-service`.
@@ -139,8 +148,18 @@ npm start
 - Gateway: http://localhost:8080/products, http://localhost:8080/orders
 - Frontend: http://localhost:3000
 
-> The frontend API base URLs are configured in `react-frontend/src/api/ProductService.js` and
-> `react-frontend/src/api/OrderService.js`.
+> The frontend calls every API through the gateway (`http://localhost:8080` by default). Override it with
+> `REACT_APP_API_BASE_URL`, e.g. `REACT_APP_API_BASE_URL=http://localhost:9090 npm start`.
+
+### Frontend features
+
+- Bootstrap 5.3 + Bootstrap Icons with the Inter font and a light / dark mode toggle (remembered per browser)
+- Products: card grid, prices formatted as Rupiah, search, summary stats and an *Add product* form with validation
+- Orders: responsive table with subtotals, summary stats and a *New order* form (products loaded from the API,
+  live total, pre-filled via *Order this* on a product card)
+- Loading skeletons, empty / error states with retry, and toast notifications
+
+Run the frontend tests with `cd react-frontend && CI=true npm test`.
 
 ## Notes on JDK 25
 
