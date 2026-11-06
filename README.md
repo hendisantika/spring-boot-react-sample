@@ -10,6 +10,22 @@
 Spring Boot + React sample with a microservice architecture: service discovery (Eureka), an API gateway
 (Spring Cloud Gateway), two business services (product & order) and a React frontend.
 
+## Screenshots
+
+### React frontend — Products
+
+![Products page](img/products.png)
+
+### React frontend — Orders
+
+![Orders page](img/orders.png)
+
+### Eureka dashboard
+
+All services registered with the service registry (`order-service` running on port `8082`):
+
+![Eureka dashboard](img/eureka-dashboard.png)
+
 ## Tech Stack
 
 | Layer              | Technology                                                       |
