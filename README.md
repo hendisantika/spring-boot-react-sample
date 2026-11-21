@@ -3,8 +3,8 @@
 [![Java CI with Maven](https://github.com/hendisantika/spring-boot-react-sample/actions/workflows/maven.yml/badge.svg)](https://github.com/hendisantika/spring-boot-react-sample/actions/workflows/maven.yml)
 [![Frontend CI](https://github.com/hendisantika/spring-boot-react-sample/actions/workflows/frontend.yml/badge.svg)](https://github.com/hendisantika/spring-boot-react-sample/actions/workflows/frontend.yml)
 ![Java](https://img.shields.io/badge/Java-25-orange?logo=openjdk)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.2-6DB33F?logo=springboot)
-![Spring Cloud](https://img.shields.io/badge/Spring%20Cloud-2025.1.4-6DB33F?logo=spring)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.2.0-6DB33F?logo=springboot)
+![Spring Cloud](https://img.shields.io/badge/Spring%20Cloud-2026.0.0-6DB33F?logo=spring)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3?logo=bootstrap)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -41,7 +41,7 @@ All services registered with the service registry (`order-service` running on po
 | Layer              | Technology                                                       |
 |--------------------|------------------------------------------------------------------|
 | Language / Runtime | Java 25 (Temurin / any JDK 25 distribution)                      |
-| Framework          | Spring Boot 4.1.2, Spring Cloud 2025.1.4                         |
+| Framework          | Spring Boot 4.2.0, Spring Cloud 2026.0.0                         |
 | Service discovery  | Spring Cloud Netflix Eureka                                      |
 | API gateway        | Spring Cloud Gateway (`spring-cloud-starter-gateway-server-webflux`) |
 | Persistence        | Spring Data JPA + H2 (in-memory)                                 |
@@ -191,7 +191,7 @@ Both run on pushes / pull requests to `main` and can also be triggered manually 
 
 | Ecosystem      | Directory                               | Schedule (Asia/Jakarta) | Groups                                                   |
 |----------------|-----------------------------------------|-------------------------|----------------------------------------------------------|
-| Maven          | all four service directories            | daily 05:00             | `maven-security`, `maven-wrapper`, `spring-boot`, `spring-cloud`, `test`, `lombok`, `maven-minor-patch` |
+| Maven          | all four service directories            | daily 05:00             | `maven-security`, `maven-wrapper`, `spring`, `test`, `lombok`, `maven-minor-patch` |
 | npm            | `/react-frontend`                       | weekly, Monday 05:00    | `npm-security`, `react`, `testing-library`, `npm-minor-patch` |
 | GitHub Actions | `/`                                     | weekly, Monday 05:00    | `github-actions`                                         |
 
@@ -199,6 +199,9 @@ Additional settings:
 
 - **Security groups** — `maven-security` and `npm-security` (`applies-to: security-updates`) bundle every security
   fix of an ecosystem into one PR so it can be merged quickly.
+- **`spring` group** — Spring Boot and Spring Cloud are always bumped in the same PR (and excluded from
+  `maven-minor-patch`), because each Spring Cloud release train only supports specific Spring Boot minors
+  (e.g. Cloud 2026.0.x ↔ Boot 4.2.x). Bumping them separately breaks the build.
 - **Extra Maven groups** — `maven-wrapper` (Maven distribution used by `mvnw`) and `lombok`.
 - **Cooldown** — newly released versions are only proposed after a waiting period (major 7 days, minor 3 days,
   patch 1 day; GitHub Actions 3 days) to reduce churn and supply-chain risk. Spring Boot & Spring Cloud are excluded
