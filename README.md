@@ -47,7 +47,7 @@ All services registered with the service registry (`order-service` running on po
 | Persistence        | Spring Data JPA + H2 (in-memory)                                 |
 | Boilerplate        | Lombok                                                           |
 | Frontend           | React 19, React Router 7, Axios, Bootstrap 5.3, Bootstrap Icons  |
-| Build              | Maven (one `pom.xml` per service)                                |
+| Build              | Maven (one `pom.xml` per service, JDK 25 enforced via `maven-enforcer-plugin`) |
 | CI / Dependencies  | GitHub Actions, Dependabot                                       |
 
 ## Architecture
@@ -111,8 +111,8 @@ The H2 console is available at `/h2-console` on `product-service` and `order-ser
 
 ## Prerequisites
 
-- JDK 25 (e.g. `sdk install java 25-tem`)
-- Maven 3.9+
+- JDK 25 (e.g. `sdk install java 25-tem`, or just `sdk env` in the repo root — it reads [`.sdkmanrc`](.sdkmanrc))
+- Maven 3.9+ (or the bundled `./mvnw` wrapper in each service)
 - Node.js 18+ and npm (or pnpm) for the frontend
 
 ## Build
@@ -168,6 +168,14 @@ Since JDK 23, `javac` no longer runs annotation processors found on the classpat
 `product-service` therefore register Lombok and `spring-boot-configuration-processor` explicitly in the
 `maven-compiler-plugin` `annotationProcessorPaths`.
 
+Every service also runs a `maven-enforcer-plugin` rule (`enforce-jdk-25`) that requires JDK `${java.version}` (25) or
+newer and Maven 3.9+, so building with an older JDK fails fast with a clear message:
+
+```
+[ERROR] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion failed with message:
+[ERROR] This project requires JDK 25 or newer.
+```
+
 ## CI
 
 | Workflow | File | What it does |
@@ -183,9 +191,20 @@ Both run on pushes / pull requests to `main` and can also be triggered manually 
 
 | Ecosystem      | Directory                               | Schedule (Asia/Jakarta) | Groups                                                   |
 |----------------|-----------------------------------------|-------------------------|----------------------------------------------------------|
-| Maven          | all four service directories            | daily 05:00             | `spring-boot`, `spring-cloud`, `test`, `maven-minor-patch` |
-| npm            | `/react-frontend`                       | weekly, Monday 05:00    | `react`, `testing-library`, `npm-minor-patch`            |
+| Maven          | all four service directories            | daily 05:00             | `maven-security`, `maven-wrapper`, `spring-boot`, `spring-cloud`, `test`, `lombok`, `maven-minor-patch` |
+| npm            | `/react-frontend`                       | weekly, Monday 05:00    | `npm-security`, `react`, `testing-library`, `npm-minor-patch` |
 | GitHub Actions | `/`                                     | weekly, Monday 05:00    | `github-actions`                                         |
+
+Additional settings:
+
+- **Security groups** — `maven-security` and `npm-security` (`applies-to: security-updates`) bundle every security
+  fix of an ecosystem into one PR so it can be merged quickly.
+- **Extra Maven groups** — `maven-wrapper` (Maven distribution used by `mvnw`) and `lombok`.
+- **Cooldown** — newly released versions are only proposed after a waiting period (major 7 days, minor 3 days,
+  patch 1 day; GitHub Actions 3 days) to reduce churn and supply-chain risk. Spring Boot & Spring Cloud are excluded
+  from the cooldown so framework releases arrive right away.
+- **npm `versioning-strategy: increase`** — bumps the range in `package.json`, not only `package-lock.json`.
+- **`rebase-strategy: auto`** — open Dependabot PRs are rebased automatically when they conflict with `main`.
 
 PRs are labelled (`dependencies` + ecosystem), assigned to the maintainer and use `chore(deps)` / `ci(deps)` commit prefixes.
 
