@@ -45,11 +45,11 @@ updates:
         patterns:
           - "org.apache.maven:apache-maven"
           - "org.apache.maven.wrapper*"
-      spring-boot:
+      # Spring Boot & Spring Cloud must move together (each Cloud release train only
+      # supports specific Boot minors), so they always share a single PR.
+      spring:
         patterns:
           - "org.springframework.boot*"
-      spring-cloud:
-        patterns:
           - "org.springframework.cloud*"
       test:
         patterns:
@@ -61,6 +61,9 @@ updates:
         patterns:
           - "org.projectlombok*"
       maven-minor-patch:
+        exclude-patterns:
+          - "org.springframework.boot*"
+          - "org.springframework.cloud*"
         update-types:
           - minor
           - patch
